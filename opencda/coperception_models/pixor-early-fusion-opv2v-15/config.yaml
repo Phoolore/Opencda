@@ -42,12 +42,13 @@ optimizer:
 postprocess:
   anchor_args:
     cav_lidar_range: &id002
-    - -160
+    - -140.8
     - -40
-    - -3
-    - 160
+    - -8
+    - 140.8
     - 40
-    - 1
+    - 8
+    max_cav: 10
     downsample_rate: 4
     res: 0.2
   core_method: BevPostprocessor
