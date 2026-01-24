@@ -29,12 +29,11 @@ for i in bps:
     if 'walker' in i.tags or 'pedestrian' in i.tags:
         k += 1
         print(f"""
-    - name: pedestrian{0 + k}
-      spawn_position: [{110 + 5 * k}, 12, 1, 0, 0, 0]
-      id: {141 + k}
+    - name: pedestrian{ k}
+      spawn_position: [{115 + 2 * k}, 12, 1, 0, 0, 0]
+      id: {141 +  k}
       model: "{i.id}"
-      color: [{(170 + 10 * k) % 250}, 10, 231]
-              """)
+      color: [{(170 + 10 * k) % 250}, 10, 231]""")
 """from opencda.scenario_testing.utils.sim_api import multi_class_vehicle_blueprint_filter as filter
 import json
 

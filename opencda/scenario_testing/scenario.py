@@ -150,7 +150,7 @@ class Scenario:
         logger.info(f"created platoon list of size {len(self.platoon_list)}")
 
         self.single_cav_list, self.node_ids["cav"] = self.scenario_manager.create_vehicle_manager(
-            application=["single"], map_helper=map_api.spawn_helper_2lanefree, data_dump=data_dump
+            application=["single"], map_helper=map_api.spawn_helper_2lanefree, data_dump=data_dump, semantic_tag_list=opt.stl
         )
         logger.info(f"created single cavs of size {len(self.single_cav_list)}")
 
