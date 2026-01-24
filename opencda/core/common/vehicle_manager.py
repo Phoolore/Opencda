@@ -85,7 +85,7 @@ class VehicleManager(object):
         current_time="",
         data_dumping=False,
         autogenerate_id_on_failure=True,  # TODO: Привязать к конфигу сценария
-        prefix="unknown",
+        prefix="unknown", semantic_tag_list=[14],
     ):
         config_id = config_yaml.get("id")
         self.prefix = prefix if prefix in {"cav", "platoon"} else "unknown"
@@ -138,7 +138,7 @@ class VehicleManager(object):
         self.localizer = LocalizationManager(vehicle, sensing_config["localization"], carla_map)
         # perception module
         self.perception_manager = PerceptionManager(
-            vehicle=vehicle, config_yaml=sensing_config["perception"], cav_world=cav_world, infra_id=self.vid, data_dump=data_dumping
+            vehicle=vehicle, config_yaml=sensing_config["perception"], cav_world=cav_world, infra_id=self.vid, data_dump=data_dumping, semantic_tag_list=semantic_tag_list,
         )
         # map manager
         self.map_manager = MapManager(vehicle, carla_map, map_config)

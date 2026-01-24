@@ -1,0 +1,396 @@
+description: |-
+  Copyright 2021 <UCLA Mobility Lab>
+  Author: Runsheng Xu <rxx3386@ucla.edu>
+  Content: This is the scenario testing configuration file for single vehicle full-stack system in town06 with co-simulation
+
+world:
+  town: Town03
+  sync_mode: true
+  fixed_delta_seconds: 0.05
+blueprint:
+  use_multi_class_bp: true
+  bp_meta_path: "opencda/assets/blueprint_meta/bbx_stats_0915.json" # Define the path for loading the blueprint metadata for defining the class of each blueprint
+  # Define blueprint type sample probabilities
+  bp_class_sample_prob:
+    car: 0.5
+    truck: 0.1
+    bus: 0.1
+    bicycle: 0.1
+    motorcycle: 0.1
+
+# First define the basic parameters of the vehicles
+vehicle_base:
+  sensing:
+    perception:
+      activate: false # when not activated, objects positions will be retrieved from server directly
+      camera:
+        visualize: 0 # how many camera images need to be visualized. 0 means no visualization for camera
+        num: 4 # how many cameras are mounted on the vehicle. Maximum 3(frontal, left and right cameras)
+        # relative positions (x,y,z,yaw) of the camera. len(positions) should be equal to camera num
+        positions:
+          - [2.5, 0, 1.0, 0]
+          - [0.0, 0.3, 1.8, 100]
+          - [0.0, -0.3, 1.8, -100]
+          - [-2.0, 0.0, 1.5, 180]
+      lidar: # lidar sensor configuration, check CARLA sensor reference for more details
+        visualize: false
+        channels: 32
+        range: 120
+        points_per_second: 1000000
+        rotation_frequency: 20 # the simulation is 20 fps
+        upper_fov: 2
+        lower_fov: -25
+        dropoff_general_rate: 0.3
+        dropoff_intensity_limit: 0.7
+        dropoff_zero_intensity: 0.4
+        noise_stddev: 0.02
+
+    localization:
+      activate: false # when not activated, ego position will be retrieved from server directly
+      debug_helper:
+        show_animation: false # whether to show real-time trajectory plotting
+
+  behavior:
+    ignore_traffic_light: false # whether to ignore traffic light
+    collision_time_ahead: 2.0 # used for collision checking
+    local_planner:
+      debug_trajectory: false
+      debug: false
+
+# define sumo simulation setting for traffic generation
+sumo:
+  port: 3000
+  host: sumo
+  gui: true
+  client_order: 2
+  step_length: ${world.fixed_delta_seconds}
+
+scenario:
+
+  single_cav_list:
+    - name: cav1
+      spawn_position: [29, 7, 1, 0, 0, 0]
+      destination: [340, 7, 1]
+      target_speed: 10
+      auto_lane_change: false
+      vehicle_speed_perc: 50
+      id: 100
+      color: [123, 10, 231]
+
+  custom:
+    - name: cav2
+      spawn_position: [29, 3, 1, 0, 0, 0]
+      destination: [340, 3, 0]
+      auto_lane_change: false
+      vehicle_speed_perc: 0
+      id: 101
+      model: "vehicle.audi.a2"
+      color: [0, 10, 231]
+
+    - name: cav3
+      spawn_position: [34, 3, 1, 0, 0, 0]
+      destination: [340, 3, 0]
+      auto_lane_change: false
+      vehicle_speed_perc: 0
+      id: 102
+      model: "vehicle.audi.etron"
+      color: [10, 10, 231]
+
+    - name: cav4
+      spawn_position: [39, 3, 1, 0, 0, 0]
+      destination: [340, 3, 0]
+      auto_lane_change: false
+      vehicle_speed_perc: 0
+      id: 103
+      model: "vehicle.audi.tt"
+      color: [20, 10, 231]
+
+    - name: cav5
+      spawn_position: [44, 3, 1, 0, 0, 0]
+      destination: [340, 3, 0]
+      auto_lane_change: false
+      vehicle_speed_perc: 0
+      id: 104
+      model: "vehicle.bh.crossbike"
+      color: [30, 10, 231]
+
+    - name: cav6
+      spawn_position: [49, 3, 1, 0, 0, 0]
+      destination: [340, 3, 0]
+      auto_lane_change: false
+      vehicle_speed_perc: 0
+      id: 105
+      model: "vehicle.bmw.grandtourer"
+      color: [40, 10, 231]
+
+    - name: cav7
+      spawn_position: [54, 3, 1, 0, 0, 0]
+      destination: [340, 3, 0]
+      auto_lane_change: false
+      vehicle_speed_perc: 0
+      id: 106
+      model: "vehicle.chevrolet.impala"
+      color: [50, 10, 231]
+
+    - name: cav8
+      spawn_position: [59, 3, 1, 0, 0, 0]
+      destination: [340, 3, 0]
+      auto_lane_change: false
+      vehicle_speed_perc: 0
+      id: 107
+      model: "vehicle.citroen.c3"
+      color: [60, 10, 231]
+
+    - name: cav9
+      spawn_position: [64, 3, 1, 0, 0, 0]
+      destination: [340, 3, 0]
+      auto_lane_change: false
+      vehicle_speed_perc: 0
+      id: 108
+      model: "vehicle.diamondback.century"
+      color: [70, 10, 231]
+
+    - name: cav10
+      spawn_position: [69, 3, 1, 0, 0, 0]
+      destination: [340, 3, 0]
+      auto_lane_change: false
+      vehicle_speed_perc: 0
+      id: 109
+      model: "vehicle.dodge.charger_2020"
+      color: [80, 10, 231]
+
+    - name: cav11
+      spawn_position: [74, 3, 1, 0, 0, 0]
+      destination: [340, 3, 0]
+      auto_lane_change: false
+      vehicle_speed_perc: 0
+      id: 110
+      model: "vehicle.dodge.charger_police"
+      color: [90, 10, 231]
+
+    - name: cav12
+      spawn_position: [79, 3, 1, 0, 0, 0]
+      destination: [340, 3, 0]
+      auto_lane_change: false
+      vehicle_speed_perc: 0
+      id: 111
+      model: "vehicle.dodge.charger_police_2020"
+      color: [100, 10, 231]
+
+    - name: cav14
+      spawn_position: [94, 3, 1, 0, 0, 0]
+      destination: [340, 3, 0]
+      auto_lane_change: false
+      vehicle_speed_perc: 0
+      id: 113
+      model: "vehicle.ford.crown"
+      color: [120, 10, 231]
+
+    - name: cav16
+      spawn_position: [99, 3, 1, 0, 0, 0]
+      destination: [340, 3, 0]
+      auto_lane_change: false
+      vehicle_speed_perc: 0
+      id: 115
+      model: "vehicle.gazelle.omafiets"
+      color: [140, 10, 231]
+
+    - name: cav17
+      spawn_position: [104, 3, 1, 0, 0, 0]
+      destination: [340, 3, 0]
+      auto_lane_change: false
+      vehicle_speed_perc: 0
+      id: 116
+      model: "vehicle.harley-davidson.low_rider"
+      color: [150, 10, 231]
+
+    - name: cav18
+      spawn_position: [109, 3, 1, 0, 0, 0]
+      destination: [340, 3, 0]
+      auto_lane_change: false
+      vehicle_speed_perc: 0
+      id: 117
+      model: "vehicle.jeep.wrangler_rubicon"
+      color: [160, 10, 231]
+
+    - name: cav19
+      spawn_position: [114, 3, 1, 0, 0, 0]
+      destination: [340, 3, 0]
+      auto_lane_change: false
+      vehicle_speed_perc: 0
+      id: 118
+      model: "vehicle.kawasaki.ninja"
+      color: [170, 10, 231]
+
+    - name: cav20
+      spawn_position: [119, 3, 1, 0, 0, 0]
+      destination: [340, 3, 0]
+      auto_lane_change: false
+      vehicle_speed_perc: 0
+      id: 119
+      model: "vehicle.lincoln.mkz_2017"
+      color: [180, 10, 231]
+
+    - name: cav21
+      spawn_position: [124, 3, 1, 0, 0, 0]
+      destination: [340, 3, 0]
+      auto_lane_change: false
+      vehicle_speed_perc: 0
+      id: 120
+      model: "vehicle.lincoln.mkz_2020"
+      color: [190, 10, 231]
+
+    - name: cav22
+      spawn_position: [129, 3, 1, 0, 0, 0]
+      destination: [340, 3, 0]
+      auto_lane_change: false
+      vehicle_speed_perc: 0
+      id: 121
+      model: "vehicle.mercedes.coupe"
+      color: [200, 10, 231]
+
+    - name: cav23
+      spawn_position: [134, 3, 1, 0, 0, 0]
+      destination: [340, 3, 0]
+      auto_lane_change: false
+      vehicle_speed_perc: 0
+      id: 122
+      model: "vehicle.mercedes.coupe_2020"
+      color: [210, 10, 231]
+
+    - name: cav24
+      spawn_position: [139, 3, 1, 0, 0, 0]
+      destination: [340, 3, 0]
+      auto_lane_change: false
+      vehicle_speed_perc: 0
+      id: 123
+      model: "vehicle.micro.microlino"
+      color: [220, 10, 231]
+
+    - name: cav25
+      spawn_position: [144, 3, 1, 0, 0, 0]
+      destination: [340, 3, 0]
+      auto_lane_change: false
+      vehicle_speed_perc: 0
+      id: 124
+      model: "vehicle.mini.cooper_s"
+      color: [230, 10, 231]
+
+    - name: cav26
+      spawn_position: [149, 3, 1, 0, 0, 0]
+      destination: [340, 3, 0]
+      auto_lane_change: false
+      vehicle_speed_perc: 0
+      id: 125
+      model: "vehicle.mini.cooper_s_2021"
+      color: [240, 10, 231]
+
+
+
+    - name: cav27
+      spawn_position: [154, 3, 1, 0, 0, 0]
+      destination: [340, 3, 0]
+      auto_lane_change: false
+      vehicle_speed_perc: 0
+      id: 126
+      model: "vehicle.nissan.micra"
+      color: [250, 10, 231]
+
+    - name: cav28
+      spawn_position: [159, 3, 1, 0, 0, 0]
+      destination: [340, 3, 0]
+      auto_lane_change: false
+      vehicle_speed_perc: 0
+      id: 127
+      model: "vehicle.nissan.patrol"
+      color: [5, 10, 231]
+
+    - name: cav29
+      spawn_position: [164, 3, 1, 0, 0, 0]
+      destination: [340, 3, 0]
+      auto_lane_change: false
+      vehicle_speed_perc: 0
+      id: 128
+      model: "vehicle.nissan.patrol_2021"
+      color: [15, 10, 231]
+
+    - name: cav30
+      spawn_position: [169, 3, 1, 0, 0, 0]
+      destination: [340, 3, 0]
+      auto_lane_change: false
+      vehicle_speed_perc: 0
+      id: 129
+      model: "vehicle.seat.leon"
+      color: [25, 10, 231]
+
+    - name: cav31
+      spawn_position: [175, 3, 1, 0, 0, 0]
+      destination: [340, 3, 0]
+      auto_lane_change: false
+      vehicle_speed_perc: 0
+      id: 130
+      model: "vehicle.tesla.cybertruck"
+      color: [35, 10, 231]
+
+    - name: cav32
+      spawn_position: [184, 3, 1, 0, 0, 0]
+      destination: [340, 3, 0]
+      auto_lane_change: false
+      vehicle_speed_perc: 0
+      id: 131
+      model: "vehicle.tesla.model3"
+      color: [45, 10, 231]
+
+    - name: cav34
+      spawn_position: [189, 3, 1, 0, 0, 0]
+      destination: [340, 3, 0]
+      auto_lane_change: false
+      vehicle_speed_perc: 0
+      id: 133
+      model: "vehicle.volkswagen.t2"
+      color: [65, 10, 231]
+
+    - name: cav35
+      spawn_position: [194, 3, 1, 0, 0, 0]
+      destination: [340, 3, 0]
+      auto_lane_change: false
+      vehicle_speed_perc: 0
+      id: 134
+      model: "vehicle.volkswagen.t2_2021"
+      color: [75, 10, 231]
+
+    - name: cav36
+      spawn_position: [199, 3, 1, 0, 0, 0]
+      destination: [340, 3, 0]
+      auto_lane_change: false
+      vehicle_speed_perc: 0
+      id: 135
+      model: "vehicle.yamaha.yzf"
+      color: [85, 10, 231]
+
+    - name: cav33
+      spawn_position: [205, 3, 1, 0, -180, 0]
+      destination: [340, 3, 0]
+      auto_lane_change: false
+      vehicle_speed_perc: 0
+      id: 132
+      model: "vehicle.toyota.prius"
+      color: [55, 10, 231]
+
+    - name: cav15
+      spawn_position: [38, 12, 1, 0, 0, 0]
+      destination: [340, 3, 0]
+      auto_lane_change: false
+      vehicle_speed_perc: 0
+      id: 114
+      model: "vehicle.ford.mustang"
+      color: [95, 10, 231]
+
+    - name: cav13
+      spawn_position: [29, 12, 1, 0, 0, 0]
+      destination: [340, 3, 0]
+      auto_lane_change: false
+      vehicle_speed_perc: 0
+      id: 112
+      model: "vehicle.ford.ambulance"
+      color: [110, 10, 231]

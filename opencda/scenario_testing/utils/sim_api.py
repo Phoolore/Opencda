@@ -249,6 +249,22 @@ class ScenarioManager:
 
         return self.world.spawn_actor(cav_vehicle_bp, spawn_transform)
 
+    # TODO: сделать им manager
+    def create_custom_actor_manager(self, application, map_helper=None, data_dump=False, fallback_model: str = "vehicle.lincoln.mkz_2017"):
+        for i, config in enumerate(self.scenario_params["scenario"]["custom_actor_list"]):
+            cav_config = OmegaConf.create(config)
+            # if the spawn position is a single scalar, we need to use map
+            # helper to transfer to spawn transform
+            if "spawn_special" not in cav_config:
+                spawn_transform = carla.Transform(
+                    carla.Location(x=cav_config["spawn_position"][0], y=cav_config["spawn_position"][1], z=cav_config["spawn_position"][2]),
+                    carla.Rotation(pitch=cav_config["spawn_position"][5], yaw=cav_config["spawn_position"][4], roll=cav_config["spawn_position"][3]),
+                )
+            else:
+                spawn_transform = map_helper(self.carla_version, *cav_config["spawn_special"])
+
+            self.spawn_custom_actor(spawn_transform, cav_config, fallback_model)
+
     def create_vehicle_manager(self, application, map_helper=None, data_dump=False, fallback_model: str = "vehicle.lincoln.mkz_2017"):
         """
         Create a list of single CAVs.
@@ -306,7 +322,7 @@ class ScenarioManager:
                 self.cav_world,
                 current_time=self.scenario_params["current_time"],
                 data_dumping=data_dump,
-                prefix="cav",
+                prefix="cav", semantic_tag_list=[int(self.scenario_params.get("stl", 0))],
             )
 
             cav_carla_list[vehicle.id] = vehicle_manager.vid

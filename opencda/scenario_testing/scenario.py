@@ -154,6 +154,11 @@ class Scenario:
         )
         logger.info(f"created single cavs of size {len(self.single_cav_list)}")
 
+        self.scenario_manager.create_custom_actor_manager(
+            application=["single"], map_helper=map_api.spawn_helper_2lanefree, data_dump=data_dump
+        )
+        logger.info(f"created single custom actors")
+
         _, self.bg_veh_list = self.scenario_manager.create_traffic_carla()
         logger.info(f"created background traffic of size {len(self.bg_veh_list)}")
 

@@ -320,7 +320,7 @@ class PerceptionManager:
         Open3d point cloud visualizer.
     """
 
-    def __init__(self, vehicle, config_yaml, cav_world, infra_id, data_dump=False, carla_world=None):
+    def __init__(self, vehicle, config_yaml, cav_world, infra_id, data_dump=False, carla_world=None, semantic_tag_list=[14]):
         self.vehicle = vehicle
         self.carla_world = carla_world if carla_world is not None else self.vehicle.get_world()
         self._map = self.carla_world.get_map()
@@ -604,7 +604,8 @@ class PerceptionManager:
 
         # label 10 is the vehicle (is it true???)
         # I replaced 10 with 14 and get ground truth worked
-        vehicle_idx = semantic_idx[semantic_tag == 14]
+        #self.semantic_tag_list = [14]
+        vehicle_idx = semantic_idx[semantic_tag.isin(self.semantic_tag_list)]
         # each individual instance id
         vehicle_unique_id = list(np.unique(vehicle_idx))
 
