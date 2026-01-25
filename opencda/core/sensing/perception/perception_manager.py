@@ -605,7 +605,7 @@ class PerceptionManager:
         # label 10 is the vehicle (is it true???)
         # I replaced 10 with 14 and get ground truth worked
         #self.semantic_tag_list = [14]
-        vehicle_idx = semantic_idx[semantic_tag.isin(self.semantic_tag_list)]
+        vehicle_idx = semantic_idx[np.isin(semantic_tag, self.semantic_tag_list)]
         # each individual instance id
         vehicle_unique_id = list(np.unique(vehicle_idx))
 
